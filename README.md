@@ -7,8 +7,8 @@ pip install openai pydantic typing-extensions
 
 1. Create the assistant and the API key on the OpenAI platform.
 
-   Assistant_OpenAI.png
+   <img width="497" alt="Image" src="https://github.com/user-attachments/assets/5c03576d-9ea5-4f3e-891c-77923842d579" />
 
 2. Create a function with the data in Open WebUI.
 
-   OpenWebUI_Function.png
+   <img width="1276" alt="Image" src="https://github.com/user-attachments/assets/59f4b905-5562-4c49-bc56-5a879871893b" />
