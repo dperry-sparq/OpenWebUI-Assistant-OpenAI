@@ -7,10 +7,15 @@ conda create --name assistant python=3.11.11
 pip install --upgrade openai pydantic typing-extensions
 
 Version:
+
 conda 24.11.0
+
 Python 3.11.11
+
 openai== 0.27.0
+
 pydantic==1.10.21
+
 typing_extensions==4.12.2
 
 1. Create the assistant and the API key on the OpenAI platform.
