@@ -3,7 +3,7 @@ Create your assistant in the OpenAI dashboard, generate an API key, and use this
 
 Ensure that these dependencies are installed in your Python environment before executing the script.
 
-pip install pydantic typing-extensions --upgrade openai
+pip install --upgrade pydantic typing-extensions openai
 
 1. Create the assistant and the API key on the OpenAI platform.
 
