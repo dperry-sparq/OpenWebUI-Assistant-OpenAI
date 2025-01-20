@@ -3,8 +3,6 @@ This repository assumes that you have already installed Open WebUI. I have not u
 
 Create your assistant in the OpenAI dashboard, generate an API key, and use this code to integrate it into Open WebUI. Remember that it is a FUNCTION, not a pipeline.
 
-Ensure that these dependencies are installed in your Python environment before executing the script.
-
 Version:
 
 conda 24.11.0
@@ -18,10 +16,6 @@ pydantic==1.10.21
 typing_extensions==4.12.2
 
 1. Dependencies
-
-   conda create --name assistant python=3.11.11
-
-   conda activate assistant
 
    pip install --upgrade openai pydantic typing-extensions
 
