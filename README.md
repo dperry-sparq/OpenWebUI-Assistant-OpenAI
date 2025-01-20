@@ -4,6 +4,7 @@ Create your assistant in the OpenAI dashboard, generate an API key, and use this
 Ensure that these dependencies are installed in your Python environment before executing the script.
 
 conda create --name assistant python=3.11.11
+
 pip install --upgrade openai pydantic typing-extensions
 
 Version:
