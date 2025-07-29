@@ -9,6 +9,7 @@ class Pipe:
     class Valves(BaseModel):
         OPENAI_API_KEY: str = Field(default="")
         ASSISTANT_ID: str = Field(default="")
+        ASSISTANT_NAME: str = Field(default="")
 
     def __init__(self):
         self.type = "manifold"
@@ -17,23 +18,39 @@ class Pipe:
         self.valves = self.Valves(
             **{
                 "OPENAI_API_KEY": os.getenv("SS_OPENAI_API_KEY", "api_key"),
-                "ASSISTANT_ID": os.getenv("SS_ASSISTANT_ID", "assistant_id")
+                "ASSISTANT_ID": os.getenv("SS_ASSISTANT_ID", "assistant_id"),
+                "ASSISTANT_NAME": os.getenv("SS_ASSISTANT_NAME", "assistant_name"),
             }
         )
         if not self.valves.OPENAI_API_KEY:
-            raise ValueError("API Key is required. Set SS_OPENAI_API_KEY as an environment variable.")
+            raise ValueError(
+                "API Key is required. Set SS_OPENAI_API_KEY as an environment variable."
+            )
         openai.api_key = self.valves.OPENAI_API_KEY
-        
+
         if not self.valves.ASSISTANT_ID:
-            raise ValueError("Assistant ID is required. Set SS_ASSISTANT_ID as an environment variable.")
+            raise ValueError(
+                "Assistant ID is required. Set SS_ASSISTANT_ID as an environment variable."
+            )
         self.assistant_id = self.valves.ASSISTANT_ID
 
-        self.assistant_name = os.getenv("SS_ASSISTANT_NAME", None)
-
+        if not self.valves.ASSISTANT_NAME:
+            raise ValueError(
+                "Assistant Name is required. Set SS_ASSISTANT_NAME as an environment variable."
+            )
+        self.assistant_name = self.valves.ASSISTANT_NAME
 
     def pipes(self) -> List[dict]:
-       return [{"id": self.assistant_id, "name": "Custom Assistant" if self.assistant_name is None else self.assistant_name}]
-
+        return [
+            {
+                "id": self.assistant_id,
+                "name": (
+                    "Custom Assistant"
+                    if self.assistant_name is None
+                    else self.assistant_name
+                ),
+            }
+        ]
 
     def process_messages(self, messages: List[dict]) -> List[dict]:
         """Process a list of messages and format them for OpenAI API."""
