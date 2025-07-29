@@ -16,7 +16,7 @@ class Pipe:
         self.name = "openai/"
         self.valves = self.Valves(
             **{
-                "OPENAI_API_KEY": os.getenv("SS_OPENAI_API_KEY", "api_key")
+                "OPENAI_API_KEY": os.getenv("SS_OPENAI_API_KEY", "api_key"),
                 "ASSISTANT_ID": os.getenv("SS_ASSISTANT_ID", "assistant_id")
             }
         )
