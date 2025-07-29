@@ -8,6 +8,7 @@ from pydantic import BaseModel, Field
 class Pipe:
     class Valves(BaseModel):
         OPENAI_API_KEY: str = Field(default="")
+        ASSISTANT_ID: str = Field(default="")
 
     def __init__(self):
         self.type = "manifold"
@@ -15,44 +16,23 @@ class Pipe:
         self.name = "openai/"
         self.valves = self.Valves(
             **{
-                "OPENAI_API_KEY": os.getenv("OPENAI_API_KEY", "api_key_number") # API KEY Open AI
+                "OPENAI_API_KEY": os.getenv("SS_OPENAI_API_KEY", "api_key")
+                "ASSISTANT_ID": os.getenv("SS_ASSISTANT_ID", "assistant_id")
             }
         )
         if not self.valves.OPENAI_API_KEY:
-            raise ValueError("API Key is required. Set OPENAI_API_KEY as an environment variable.")
+            raise ValueError("API Key is required. Set SS_OPENAI_API_KEY as an environment variable.")
         openai.api_key = self.valves.OPENAI_API_KEY
+        
+        if not self.valves.ASSISTANT_ID:
+            raise ValueError("Assistant ID is required. Set SS_ASSISTANT_ID as an environment variable.")
+        self.assistant_id = self.valves.ASSISTANT_ID
+
+        self.assistant_name = os.getenv("SS_ASSISTANT_NAME", None)
 
 
     def pipes(self) -> List[dict]:
-        if self.valves.OPENAI_API_KEY:
-            try:
-                print("Fetching assistants from API...")
-                assistant_data = openai.beta.assistants.list()
-                assistants = [
-                    {
-                        "id": assistant.id,
-                        "name": assistant.name or "",
-                        "description": assistant.description or "",
-                    }
-                    for assistant in assistant_data.data
-                ]
-
-                print(f"\nSuccessfully found assistants: {assistants}")
-                return assistants
-            except Exception as e:
-                return [
-                    {
-                        "id": "error",
-                        "name": "Error fetching models. Please check your API Key.",
-                    },
-                ]
-        else:
-            return [
-                {
-                    "id": "error",
-                    "name": "API Key not provided.",
-                },
-            ]
+       return [{"id": self.assistant_id, "name": "Custom Assistant" if self.assistant_name is None else self.assistant_name}]
 
 
     def process_messages(self, messages: List[dict]) -> List[dict]:
